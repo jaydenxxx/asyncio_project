@@ -29,11 +29,13 @@ def test():
     print('start 1 th')
     time.sleep(1)
     print('finish 1 th')
+    return "1"
 
 def tese02():
     print('start 2 th')
     time.sleep(1)
     print('finish 2 th')
+    return None
 
 async def main():
     #启动3个线程
@@ -43,13 +45,25 @@ async def main():
             #新建一个线程来执行耗时函数
             loop.run_in_executor(
                 executor,
-                fun)
+                spider_77,
+            i)
             #fun为需要执行的函数
-            for fun in [tese02, test]
+            for i in range(1, 3)
         )
         #等待执行完成
-        await asyncio.gather(*futures)
+        result = await asyncio.gather(*futures)
+        return result
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
-print(RESULT)
+t1 = time.time()
+for i in range(1, 3):
+    spider_77(i)
+print('spend time:{}s'.format(time.time()-t1))
+
+
+time.sleep(10)
+
+t2 = time.time()
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+result = loop.run_until_complete(main())
+print('spend time:{}s'.format(time.time()-t2))
